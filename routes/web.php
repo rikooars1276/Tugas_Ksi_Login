@@ -5,12 +5,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 
-// ================= ROOT =================
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// ================= LOGIN =================
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
@@ -18,19 +18,19 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'proseslogin'])
     ->name('login');
 
-// ================= REGISTER =================
+    
 Route::get('/register', [AuthController::class, 'showRegister'])
     ->name('register');
 
 Route::post('/register', [AuthController::class, 'register'])
     ->name('register');
 
-// ================= DASHBOARD =================
+
 Route::get('/dashboard', [AuthController::class, 'dashboard'])
     ->middleware('auth')
     ->name('dashboard');
 
-// ================= EMAIL VERIFICATION =================
+
 
 // halaman notice
 Route::get('/email/verify', function () {
@@ -55,7 +55,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-// ================= FORGOT PASSWORD =================
+
 
 // halaman forgot password
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])

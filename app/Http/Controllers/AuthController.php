@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    // ================= LOGIN =================
+    
     public function proseslogin(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -28,19 +28,19 @@ class AuthController extends Controller
             ->with('error', 'Email atau Password salah');
     }
 
-    // ================= SHOW REGISTER =================
+    
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // ================= DASHBOARD =================
+    
     public function dashboard()
     {
         return view('auth.dashboard');
     }
 
-    // ================= REGISTER =================
+    
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         ]);
 
-        // VALIDASI GAGAL
+        
         if ($validator->fails()) {
 
             return redirect()
@@ -64,7 +64,7 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        // ================= SIMPAN USER =================
+        
         $user = User::create([
 
             'name' => $request->name,
@@ -77,22 +77,22 @@ class AuthController extends Controller
 
         ]);
 
-        // ================= EMAIL VERIFICATION =================
+        
         $user->sendEmailVerificationNotification();
 
-        // ================= REDIRECT KE LOGIN =================
+        
         return redirect()
             ->route('login')
             ->with('success', 'Akun berhasil dibuat, silakan login.');
     }
 
-    // ================= SHOW FORGOT PASSWORD =================
+    
     public function showForgotPassword()
     {
         return view('auth.forgot-password');
     }
 
-    // ================= KIRIM LINK RESET PASSWORD =================
+    
     public function forgotPassword(Request $request)
     {
         $request->validate([
@@ -114,7 +114,7 @@ class AuthController extends Controller
             ]);
     }
 
-    // ================= FORM PASSWORD BARU =================
+    
     public function showResetPassword(string $token)
     {
         return view('auth.reset-password', [
@@ -122,7 +122,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // ================= SIMPAN PASSWORD BARU =================
+    
     public function resetPassword(Request $request)
     {
         $request->validate([
@@ -154,7 +154,7 @@ class AuthController extends Controller
             }
         );
 
-        // ================= RESET BERHASIL =================
+        
         return $status === Password::PASSWORD_RESET
 
             ? redirect()
